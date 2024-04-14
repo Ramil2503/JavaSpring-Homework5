@@ -28,8 +28,9 @@ public class TaskController {
     //    "status": "IN_PROGRESS"
     //}
     @PostMapping("/tasks")
-    public void createTask(@RequestBody Task task) {
+    public String createTask(@RequestBody Task task) {
         taskService.addTask(task);
+        return "New " + task + " created";
     }
 
     // to use this method send GET Request to localhost:8080/status/{status}
@@ -46,14 +47,16 @@ public class TaskController {
     // for example: "COMPLETED"
     // the valid status values are: NOT_STARTED, IN_PROGRESS, COMPLETED
     @PutMapping("/update/{id}")
-    public void updateTaskStatus(@PathVariable("id") Long id, @RequestBody TaskStatus newStatus) {
+    public String updateTaskStatus(@PathVariable("id") Long id, @RequestBody TaskStatus newStatus) {
         taskService.updateTaskStatus(id, newStatus);
+        return "The status of the task with id: " + id + " is updated to: " + newStatus;
     }
 
     // to use this method send DELETE Request to localhost:8080/delete/{id}
     // REPLACE "{id}" with one of the valid id values
     @DeleteMapping("/delete/{id}")
-    public void deleteTask(@PathVariable("id") Long id) {
+    public String deleteTask(@PathVariable("id") Long id) {
         taskService.deleteTask(id);
+        return "Task with id: " + id + " has been deleted";
     }
 }
